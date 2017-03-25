@@ -1,4 +1,6 @@
 # ElixirTraining
+[![CircleCI](https://circleci.com/gh/budougumi0617/ElixirTraining.svg?style=svg)](https://circleci.com/gh/budougumi0617/ElixirTraining) [![Coverage Status](https://coveralls.io/repos/github/budougumi0617/ElixirTraining/badge.svg)](https://coveralls.io/github/budougumi0617/ElixirTraining)
+
 Study Elixir with "Programming Elixir 1.2".
 
 English version: http://amazon.jp/dp/1680501666  
