@@ -13,7 +13,8 @@ Is it 375
 Is it 312
 Is it 281
 Is it 265
-Is it 273"
+Is it 273
+"
     # tip: or use only: "capture_io(fun)" to silence the IO output (so only assert the return value)
   end
 end
