@@ -1,6 +1,6 @@
 defmodule ChopTest do
   use ExUnit.Case
-
+  # See https://hexdocs.pm/ex_unit/ExUnit.CaptureIO.html
   import ExUnit.CaptureIO
 
   test "Guess is like a Divide And Conquer" do
