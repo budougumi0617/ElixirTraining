@@ -4,7 +4,7 @@ defmodule MyList05 do
         f.(head)
         each(tail, f)
     end
-    def each([],f) do
+    def each(_, _) do
         :ok
     end
     def filter([head | tail], f) do
@@ -25,6 +25,26 @@ defmodule MyList05 do
     defp _filter([], _, list) do
         list
     end
-    def split([head | tail], i), do: []
-    def take(list, f), do: []
+    def split([head | tail], i) do
+        _split([head], tail, i-1)
+    end
+    defp _split(f, s, 0) do
+        {f, s}
+    end
+    defp _split(f, [head| tail], i) do
+        _split(f ++ [head], tail, i-1)
+    end
+
+    def take([head | tail], i) do
+        _take([head], tail, i-1)
+    end
+    def take(_, 0) do
+        []
+    end
+    defp _take(ans, _, 0) do
+        ans
+    end
+    defp _take(ans, [head | tail], i) do
+        _take(ans ++ [head], tail, i-1)
+    end
 end
