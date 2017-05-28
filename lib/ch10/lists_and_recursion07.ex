@@ -8,8 +8,27 @@ defmodule MyList07 do
 
     defp prime?(n) when n < 2, do: false
     defp prime?(n) when n == 2, do: true
+    defp prime?(n) when rem(n, 2) == 0, do: false
     defp prime?(n) do
-        list = Enum.to_list(3..n-1)
-        Enum.any?(list, fn(x) -> rem(n, x) == 0 end)
+        list = makeList(n-1, [])
+        prime?(n, list)
+    end
+
+    defp prime?(n, [head | tail]) do
+        if rem(n, head) == 0 do
+            false
+        else
+            prime?(n, tail)
+        end
+    end
+    defp prime?(n, []) do
+        true 
+    end
+    defp makeList(num, list) do
+        if num <= 2 do
+            list
+        else
+            makeList(num-1, [num | list])
+        end
     end
 end
