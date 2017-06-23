@@ -1,6 +1,6 @@
 defmodule MyList07 do
     def span(from, to) when from <= to, do: [from | span(from+1, to)]
-    def span(from, to), do: []
+    def span(_,_), do: []
     
     def prime(n) do
         for n <- span(2, n), prime?(n), do: n
@@ -21,7 +21,7 @@ defmodule MyList07 do
             prime?(n, tail)
         end
     end
-    defp prime?(n, []) do
+    defp prime?(_, []) do
         true 
     end
     defp makeList(num, list) do
