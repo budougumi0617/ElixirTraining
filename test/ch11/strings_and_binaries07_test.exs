@@ -1,9 +1,9 @@
 defmodule MyString07Test do
   use ExUnit.Case
-  def calc(rates, orders) do
-      for order <- orders, do: order ++ [total_amount: total(rates, order)]
+  def calc(orders, rates) do
+      for order <- orders, do: order ++ [total_amount: total(order, rates)]
   end
-  def total(rates, order) do
+  def total(order, rates) do
     if Keyword.has_key?(rates, order[:ship_to]) do
       order[:net_amount] * (1.00 + rates[order[:ship_to]])
     else
@@ -11,7 +11,6 @@ defmodule MyString07Test do
     end
   end
   test "Add total amount" do
-
     tax_rates = [ NC: 0.075, TX: 0.08]
     after_tax = [
       [ id: 123, ship_to: :NC, net_amount: 100.0, total_amount: 107.5 ],
@@ -23,7 +22,7 @@ defmodule MyString07Test do
       [ id: 129, ship_to: :CA, net_amount: 102.0, total_amount: 102.0 ],
       [ id: 120, ship_to: :NC, net_amount: 50.0, total_amount:  53.75 ]
     ]
-    assert MyStrings07.parse("data_to_sab07.csv") |> calc tax_rates == after_tax
+    assert MyStrings07.parse("test/ch11/data_to_sab07.csv") |> calc(tax_rates) == after_tax
   end
 
 
