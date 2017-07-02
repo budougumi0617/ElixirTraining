@@ -10,14 +10,12 @@ defmodule MyStrings07 do
     end
 
     def set_id(s) do
-        {n, _} = Integer.parse s
-        {:id, n}
+        {:id, String.to_integer(s)}
     end
     def set_ship_to(s) do
         {:ship_to, String.to_atom(String.trim(s, ":"))}
     end
     def set_net_amount(s) do
-        {f, _} = Float.parse s
-        {:net_amount, f}
+        {:net_amount, String.to_float(String.trim(s))}
     end
 end
