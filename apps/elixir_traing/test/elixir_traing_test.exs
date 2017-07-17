@@ -1,6 +1,6 @@
-defmodule ElixirTrainingTest do
+defmodule ElixirTraingTest do
   use ExUnit.Case
-  doctest ElixirTraining
+  doctest ElixirTraing
 
   test "the truth" do
     assert 1 + 1 == 2
