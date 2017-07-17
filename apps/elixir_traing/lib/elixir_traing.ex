@@ -1,6 +1,6 @@
-defmodule ElixirTraining do
+defmodule ElixirTraing do
   @moduledoc """
-  Documentation for ElixirTraining.
+  Documentation for ElixirTraing.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule ElixirTraining do
 
   ## Examples
 
-      iex> ElixirTraining.hello
+      iex> ElixirTraing.hello
       :world
 
   """
