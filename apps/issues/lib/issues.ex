@@ -1,6 +1,11 @@
 defmodule Issues do
+
+  @default_count 4
+
   @moduledoc """
-  Documentation for Issues.
+  Handle the command line parsing and the dispach to
+  the verious functions that end up generating a
+  table of the last _n_ issues in a github project.
   """
 
   @doc """
