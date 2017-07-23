@@ -37,6 +37,9 @@ defmodule ElixirTraing.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:excoveralls, "~> 0.4"}] # Must set variable COVERALLS_REPO_TOKEN on CircleCI.]
+    [
+      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.4"}
+    ] # Must set variable COVERALLS_REPO_TOKEN on CircleCI.]
   end
 end
