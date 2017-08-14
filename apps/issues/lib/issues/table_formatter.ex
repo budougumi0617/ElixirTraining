@@ -91,6 +91,10 @@ defmodule Issues.TableFormatter do
     map_join(column_widths, "-+-", fn width -> List.duplicate("-", width) end)
   end
 
+  @doc """
+  Given a list containing rows of data, a list containing the header selectors,
+  and a format string, write the extracted data under control of the format string.
+  """
   def puts_in_columns(data_by_columns, format) do
     data_by_columns
     |> List.zip
