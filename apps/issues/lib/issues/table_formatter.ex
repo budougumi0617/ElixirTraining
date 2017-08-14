@@ -40,9 +40,27 @@ defmodule Issues.TableFormatter do
     end
   end
 
+  @doc """
+  Return a binary (string) version of ourt parameter.
+
+  ## Example
+      iex> Issues.TableFormatter.printable("a")
+      "a"
+      iex> Issues.TableFormatter.printable(99)
+      "99"
+  """
   def printable(str) when is_binary(str), do: str
   def printable(str), do: to_string(str)
 
+  @doc """
+  Given a list containing sublists, where each sublist contains the data for
+  a column, return a list containing the maximum width of each column
+
+  ## Example
+      iex> data = [ [ "cat", "iwombat", "elk" ], ["mongoose", "ant", "gnu"] ]
+      iex> Issues.TableFormatter.widths_of(data)
+      [ 6, 8 ]
+  """
   def widths_of(columns) do
     for column <- columns, do: column |> map(&String.length/1) |> max
   end
