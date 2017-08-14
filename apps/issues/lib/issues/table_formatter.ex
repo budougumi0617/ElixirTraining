@@ -29,8 +29,8 @@ defmodule Issues.TableFormatter do
 
   ## Example
 
-      iex> list = [Enum.into([{"a", "1"},{"b", "2"},{"c", "3"}, %{}]),
-      ...>         Enum.into([{"a", "4"},{"b", "5"},{"c", "6"}, %{}])]
+      iex> list = [Enum.into([{"a", "1"},{"b", "2"},{"c", "3"}], %{}),
+      ...>         Enum.into([{"a", "4"},{"b", "5"},{"c", "6"}], %{})]
       iex> Issues.TableFormatter.split_into_columns(list, [ "a", "b", "c" ])
       [ ["1", "4"], ["2", "5"], ["3", "6"] ]
   """
@@ -57,7 +57,7 @@ defmodule Issues.TableFormatter do
   a column, return a list containing the maximum width of each column
 
   ## Example
-      iex> data = [ [ "cat", "iwombat", "elk" ], ["mongoose", "ant", "gnu"] ]
+      iex> data = [ [ "cat", "wombat", "elk" ], [ "mongoose", "ant", "gnu" ] ]
       iex> Issues.TableFormatter.widths_of(data)
       [ 6, 8 ]
   """
