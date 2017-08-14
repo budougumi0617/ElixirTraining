@@ -65,6 +65,15 @@ defmodule Issues.TableFormatter do
     for column <- columns, do: column |> map(&String.length/1) |> max
   end
 
+  @doc """
+  Return a format string that hard codes the widths of a set of columns.
+  We put `" | "` between each column.
+
+  ## Example
+      iex> widths = [5,6,99]
+      iex> Issues.TableFormatter.format_for(widths)
+      "~-5s | ~-6s | ~-99s~n"
+  """
   def format_for(column_widths) do
     map_join(column_widths, " | ", fn width -> "~-#{width}s" end) <> "~n"
   end
