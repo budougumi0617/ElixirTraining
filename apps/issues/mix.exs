@@ -12,6 +12,8 @@ defmodule Issues.Mixfile do
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     name: "Issues",
+     source_url: "https://github.com/budougumi0617/ElixirTraining/app/issues",
      deps: deps()]
   end
 
@@ -40,7 +42,9 @@ defmodule Issues.Mixfile do
     [
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:httpoison, "~> 0.8"},
-      {:poison, "~> 1.5"}
+      {:poison, "~> 1.5"},
+      {:ex_doc, "~> 0.11"},
+      {:earmark, ">= 0.0.0"}
     ]
   end
 
