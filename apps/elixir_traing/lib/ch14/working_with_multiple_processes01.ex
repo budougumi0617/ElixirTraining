@@ -24,3 +24,13 @@ defmodule Chain do
         IO.puts inspect :timer.tc(Chain, :create_processes, [n])
     end
 end
+
+"""
+MBP 2016 Core i5 3.1GHz, 16GB RAM
+{3348, "Result is 10"}
+{3886, "Result is 100"}
+{11937, "Result is 1000"}
+{95558, "Result is 10000"}
+{3022338, "Result is 400000"}
+{7309047, "Result is 1000000"}
+"""
