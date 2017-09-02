@@ -1,14 +1,15 @@
-defmodule Spawn do
+defmodule WorkingWithMultipleProcesses2 do
     def greet do
         receive do
             {sender, msg} ->
                 send sender, { :ok, "Hello #{msg}."}
+            greet()
         end
     end
 end
 
-pid1 = spawn(Spawn, :greet, [])
-pid2 = spawn(Spawn, :greet, [])
+pid1 = spawn(WorkingWithMultipleProcesses2, :greet, [])
+pid2 = spawn(WorkingWithMultipleProcesses2, :greet, [])
 
 send pid1, {self(), "pid1_1"}
 send pid1, {self(), "pid1_2"}
