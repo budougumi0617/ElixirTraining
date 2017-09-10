@@ -1,6 +1,7 @@
 defmodule WorkingWithMultipleProcesses07 do
   import :timer, only: [ sleep: 1 ]
 
+  # ^pidにすることで、receiveした順序ではなく、生成したプロセスの順序で二回目のEnum.mapを処理される。
   def pmap(collection, fun) do
     me = self()
     collection
@@ -14,6 +15,7 @@ defmodule WorkingWithMultipleProcesses07 do
     end)
   end
 
+  # 完了した順で二回目のEnum.mapが処理される
   def pmap_unsort(collection, fun) do
     me = self()
     collection
