@@ -2,9 +2,9 @@ defmodule FileSeeker do
   def count(scheduler) do
     send scheduler, { :ready, self()}
     receive do
-      { :seek, dir, client } ->
+      { :count, dir, client } ->
         send client, { :answer, dir, count_seek(dir), self() }
-        fib(scheduler)
+        count(scheduler)
 
       { :shutdown } ->
         exit(:normal)
@@ -12,15 +12,17 @@ defmodule FileSeeker do
   end
 
   defp count_seek(dir) do
-    File.ls!(".")
-    |> Enum.map(fn(f) -> File.read!(f) end)
-    |> Enum.map(fn body -> String.split(body) end) # ファイル内容文字列から単語に分割したリストを生成
-    # catをカウントしないと。
+    File.ls!(dir)
+    |> Enum.reject(&(File.dir?(&1)))
+    |> Enum.map(&(File.read!(&1)))
+    |> Enum.map(&(String.split(&1)))
+    |> Enum.map(fn list -> Enum.filter(list, &(&1 == "do")) end) # 入れ子になるので外側の無名関数はは&1使えない
+    |> Enum.map(&(Enum.count(&1)))
   end
 end
 
 defmodule Scheduler do
-  
+
   def run(num_processes, module, func, to_calculate) do
     (1..num_processes)
     |> Enum.map(fn(_) -> spawn(module, func, [self()]) end)
@@ -31,7 +33,7 @@ defmodule Scheduler do
     receive do
       { :ready, pid } when length(queue) > 0 ->
         [ next | tail ] = queue
-        send pid, { :fib, next, self()}
+        send pid, { :count, next, self()}
         schedule_processes(processes, tail, results)
 
       {:ready, pid} ->
@@ -48,12 +50,12 @@ defmodule Scheduler do
   end
 end
 
-to_processes = [ 37, 37, 37, 37, 37, 37 ]
+to_processes = [ "./", "./", "./", "./", "./", "./", "./" ]
 
 Enum.each 1..10, fn num_processes ->
   {time, result} = :timer.tc(
     Scheduler, :run,
-    [num_processes, FibSolver, :fib, to_processes]
+    [num_processes, FileSeeker, :count, to_processes]
   )
 
   if num_processes == 1 do
@@ -78,3 +80,4 @@ end
 #  8      2.95
 #  9      2.89
 # 10      2.91
+

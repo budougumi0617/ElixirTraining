@@ -17,7 +17,7 @@ defmodule FibSolver do
 end
 
 defmodule Scheduler do
-  
+
   def run(num_processes, module, func, to_calculate) do
     (1..num_processes)
     |> Enum.map(fn(_) -> spawn(module, func, [self()]) end)
@@ -75,3 +75,4 @@ end
 #  8      2.95
 #  9      2.89
 # 10      2.91
+
