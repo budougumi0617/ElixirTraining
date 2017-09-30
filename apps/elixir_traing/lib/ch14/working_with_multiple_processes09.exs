@@ -2,8 +2,8 @@ defmodule FileSeeker do
   def count(scheduler) do
     send scheduler, { :ready, self()}
     receive do
-      { :count, dir, client } ->
-        send client, { :answer, dir, count_seek(dir), self() }
+      { :count, file, client } ->
+        send client, { :answer, file, count_word(file), self() }
         count(scheduler)
 
       { :shutdown } ->
@@ -11,6 +11,15 @@ defmodule FileSeeker do
     end
   end
 
+
+  defp count_word(filename) do
+    File.read!(filename)
+    |> String.split()
+    |> Enum.filter(&(&1 == "do"))
+    |> Enum.count(&(&1))
+  end
+
+  # ディレクトリに対して一連の処理。
   defp count_seek(dir) do
     File.ls!(dir)
     |> Enum.reject(&(File.dir?(&1)))
@@ -19,6 +28,8 @@ defmodule FileSeeker do
     |> Enum.map(fn list -> Enum.filter(list, &(&1 == "do")) end) # 入れ子になるので外側の無名関数はは&1使えない
     |> Enum.map(&(Enum.count(&1)))
   end
+  # Twitterで教えてもらったもっとスマートな回答。
+  # for x <- File.ls!(dir), !File.dir?(x), do: File.read!(x) |> String.split() |> Enum.filter(&(&1 == "do")) |> Enum.count(&(&1))
 end
 
 defmodule Scheduler do
@@ -50,7 +61,7 @@ defmodule Scheduler do
   end
 end
 
-to_processes = [ "./", "./", "./", "./", "./", "./", "./" ]
+to_processes = File.ls!("./") |> Enum.reject(&(File.dir?(&1)))
 
 Enum.each 1..10, fn num_processes ->
   {time, result} = :timer.tc(
@@ -68,17 +79,17 @@ end
 # Execute on 3.1 GHz Intel Core i5
 # catではなくて、'do'の数を算出している。
 # elixir working_with_multiple_processes09.exs
-# [{"./", [6, 5, 5, 5, 6, 3, 5, 9, 10]}, {"./", [6, 5, 5, 5, 6, 3, 5, 9, 10]}, {"./", [6, 5, 5, 5, 6, 3, 5, 9, 10]}, {"./", [6, 5, 5, 5, 6, 3, 5, 9, 10]}, {"./", [6, 5, 5, 5, 6, 3, 5, 9, 10]}, {"./", [6, 5, 5, 5, 6, 3, 5, 9, 10]}, {"./", [6, 5, 5, 5, 6, 3, 5, 9, 10]}]
+# [{".working_with_multiple_processes09.exs.swp", 0}, {"working_with_multiple_processes01.ex", 6}, {"working_with_multiple_processes02.ex", 5}, {"working_with_multiple_processes03.ex", 5}, {"working_with_multiple_processes04.ex", 5}, {"working_with_multiple_processes05.ex", 6}, {"working_with_multiple_processes06.ex", 3}, {"working_with_multiple_processes07.ex", 5}, {"working_with_multiple_processes08.exs", 9}, {"working_with_multiple_processes09.exs", 11}]
 #
 #  #    time(s)
-#  1      0.03
-#  2      0.04
-#  3      0.02
-#  4      0.04
-#  5      0.02
-#  6      0.08
-#  7      0.07
-#  8      0.06
+#  1      0.01
+#  2      0.00
+#  3      0.00
+#  4      0.00
+#  5      0.01
+#  6      0.01
+#  7      0.01
+#  8      0.00
 #  9      0.01
-# 10      0.06
+# 10      0.01
 
