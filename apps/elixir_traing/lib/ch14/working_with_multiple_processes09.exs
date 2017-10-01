@@ -61,7 +61,7 @@ defmodule Scheduler do
   end
 end
 
-to_processes = File.ls!("./") |> Enum.reject(&(File.dir?(&1)))
+to_processes = File.ls!("./") |> Enum.reject(&(File.dir?(&1))) |> Enum.map(&(Path.expand(&1)))
 
 Enum.each 1..10, fn num_processes ->
   {time, result} = :timer.tc(
