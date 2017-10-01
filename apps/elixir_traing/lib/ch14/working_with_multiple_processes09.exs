@@ -15,7 +15,6 @@ defmodule FileSeeker do
     end
   end
 
-
   defp count_word(filename) do
     File.read!(filename)
     |> String.split()
@@ -29,7 +28,7 @@ defmodule FileSeeker do
     |> Enum.reject(&(File.dir?(&1)))
     |> Enum.map(&(File.read!(&1)))
     |> Enum.map(&(String.split(&1)))
-    |> Enum.map(fn list -> Enum.filter(list, &(&1 == "do")) end) # 入れ子になるので外側の無名関数はは&1使えない
+    |> Enum.map(fn list -> Enum.filter(list, &(&1 == "do")) end) # 入れ子になるので外側の無名関数は&1使えない
     |> Enum.map(&(Enum.count(&1)))
   end
   # Twitterで教えてもらったもっとスマートな回答。
