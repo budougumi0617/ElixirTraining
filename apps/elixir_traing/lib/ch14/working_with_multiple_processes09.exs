@@ -3,7 +3,11 @@ defmodule FileSeeker do
     send scheduler, { :ready, self()}
     receive do
       { :count, file, client } ->
-        send client, { :answer, file, count_word(file), self() }
+        if !File.dir?(file) do # guard節でディレクトリ/ファイルをパターンマッチ出来ない。
+          send client, { :answer, file, count_word(file), self() }
+        else
+          send client, { :answer, file, 0, self() }
+        end
         count(scheduler)
 
       { :shutdown } ->
@@ -61,7 +65,7 @@ defmodule Scheduler do
   end
 end
 
-to_processes = File.ls!("./") |> Enum.reject(&(File.dir?(&1)))
+to_processes = File.ls!("./") #|> Enum.reject(&(File.dir?(&1)))
 
 Enum.each 1..10, fn num_processes ->
   {time, result} = :timer.tc(
@@ -77,19 +81,22 @@ Enum.each 1..10, fn num_processes ->
 end
 
 # Execute on 3.1 GHz Intel Core i5
-# catではなくて、'do'の数を算出している。
-# elixir working_with_multiple_processes09.exs
-# [{".working_with_multiple_processes09.exs.swp", 0}, {"working_with_multiple_processes01.ex", 6}, {"working_with_multiple_processes02.ex", 5}, {"working_with_multiple_processes03.ex", 5}, {"working_with_multiple_processes04.ex", 5}, {"working_with_multiple_processes05.ex", 6}, {"working_with_multiple_processes06.ex", 3}, {"working_with_multiple_processes07.ex", 5}, {"working_with_multiple_processes08.exs", 9}, {"working_with_multiple_processes09.exs", 11}]
+# 'cat'ではなくて、'do'の数を算出している。
+# ╭─ ~/go/src/github.com/budougumi0617/ElixirTraining
+# ╰─ elixir apps/elixir_traing/lib/ch14/working_with_multiple_processes09.exs
+# warning: function count_seek/1 is unused
+#   apps/elixir_traing/lib/ch14/working_with_multiple_processes09.exs:28
+#
+# [{".git", 0}, {".gitignore", 0}, {".tool-versions", 0}, {"LICENSE", 1}, {"README.md", 1}, {"_build", 0}, {"aosn-up.sh", 0}, {"apps", 0}, {"circle.yml", 0}, {"config", 0}, {"deps", 0}, {"mix.exs", 3}, {"mix.lock", 0}]
 #
 #  #    time(s)
 #  1      0.01
-#  2      0.00
+#  2      0.01
 #  3      0.00
 #  4      0.00
-#  5      0.01
-#  6      0.01
-#  7      0.01
+#  5      0.00
+#  6      0.00
+#  7      0.00
 #  8      0.00
-#  9      0.01
-# 10      0.01
-
+#  9      0.00
+# 10      0.00
