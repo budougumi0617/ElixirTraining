@@ -23,6 +23,7 @@ defmodule Ticker do
       # タイムアウトの設定
       @interval ->
         IO.puts "tick"
+      # TODO 一度にすべて実行しない
       Enum.each clients, fn client  ->
         send client, { :tick }
       end
