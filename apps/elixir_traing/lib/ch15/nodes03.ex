@@ -20,14 +20,18 @@ defmodule Ticker do
         IO.puts "registering #{inspect pid}"
         generator(Enum.reverse([pid|clients]))
     after
-      # タイムアウトの設定
       @interval ->
         IO.puts "tick"
-      # TODO 一度にすべて実行しない
-      Enum.each clients, fn client  ->
-        send client, { :tick }
-      end
-      generator(clients)
+        case clients do
+          [ head | tail ] ->
+            send head, { :tick }
+            generator( tail ++ [ head ]) # Poor performance.
+          [ client ] ->
+            send client, { :tick }
+            generator(client)
+          [] ->
+            generator([])
+        end
     end
   end
 end
