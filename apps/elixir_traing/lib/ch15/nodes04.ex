@@ -1,8 +1,5 @@
 defmodule Ticker do
 
-  @interval 2000 # 2 seconds
-  @name     :ticker
-
   def start do
     pid = spawn(__MODULE__, :generator, [[]])
     # @nameという名前でpidを登録しておく。
@@ -49,6 +46,7 @@ defmodule Client do
     # 登録してあるのが自分だったら、自分より新しいnodeがないので、headに通知する。そうするとリングになる？
     # iex(1)> :global.whereis_name('tst')
     # :undefined
+    next = :global.get_update(:next)
   end
 
   def receiver do
