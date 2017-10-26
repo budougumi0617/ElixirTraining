@@ -37,6 +37,9 @@ defmodule Ticker do
 end
 
 defmodule Client do
+  @interval 2000 # 2 seconds
+  @head     :head
+  @next     :next
 
   def start do
     pid = spawn(__MODULE__, :receiver, [])
