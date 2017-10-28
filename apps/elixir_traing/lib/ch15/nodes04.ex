@@ -38,6 +38,16 @@ defmodule Client do
   @head     :head
   @next     :next
 
+  def start_link do
+    Agent.start_link(fn -> %{} end, name: __MODULE__)
+  end
+
+  def head do
+    case Agent.get(__MODULE__, fn map -> map[@head] end) do
+      nil -> Agent.update(__MODULE__, fn map -> Map.put(map, @head, self()) end)
+    end
+  end
+
   def start do
     pid = spawn(__MODULE__, :receiver, [])
     # Ticker.register(pid)
