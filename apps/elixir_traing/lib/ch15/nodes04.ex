@@ -45,6 +45,16 @@ defmodule Client do
   def head do
     case Agent.get(__MODULE__, fn map -> map[@head] end) do
       nil -> Agent.update(__MODULE__, fn map -> Map.put(map, @head, self()) end)
+      head -> head
+    end
+  end
+
+  def next do
+    case Agent.get(__MODULE__, fn map -> map[@next] end) do
+      nil -> Agent.update(__MODULE__, fn map -> Map.put(map, @next, self()) end)
+      next ->
+        Agent.update(__MODULE__, fn map -> Map.put(map, @next, self()) end)
+        next
     end
   end
 
