@@ -1,7 +1,10 @@
 defmodule Ticker04 do
+  @interval 2000
+  @name :ticker
 
+  # 
   def start do
-    spawn(__MODULE__, :generator, [])
+    spawn(__MODULE__, :ticker, [])
   end
 
   def add_client do
@@ -9,8 +12,8 @@ defmodule Ticker04 do
     register pid
   end
 
-  def ticker(next_client \\ self) do
-    :global.register_name @name, self
+  def ticker(next_client \\ self()) do
+    :global.register_name @name, self()
     receive do
       { :register, new_client } ->
         IO.puts "registering #{inspect new_client}"
@@ -23,13 +26,13 @@ defmodule Ticker04 do
     end
   end
 
-  def receiver(next_client \\ self) do
+  def receiver(next_client \\ self()) do
     receive do
-      { :tick, new_client } ->
-        IO.puts "first tock in #{inspect self}, sending a tick to #{inspect new_client} in 2s"
+      { :tick, new_client } -> # 引数有りで呼び出された場合は引数PIDにsendする。
+        IO.puts "first tock in #{inspect self()}, sending a tick to #{inspect new_client} in 2s"
         ticker(new_client)
-      { :tick } ->
-        IO.puts "tock in #{inspect self}, sending a tick to #{inspect next_client} in 2s"
+      { :tick } -> # 引数なしだった場合は自分にsendする。
+        IO.puts "tock in #{inspect self()}, sending a tick to #{inspect next_client} in 2s"
         ticker(next_client)
     end
   end
