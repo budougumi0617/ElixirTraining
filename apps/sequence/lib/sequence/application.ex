@@ -10,6 +10,7 @@ defmodule Sequence.Application do
     children = [
       # Starts a worker by calling: Sequence.Worker.start_link(arg)
       # {Sequence.Worker, arg},
+      {OtpServer.OtpServer, [123]},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
