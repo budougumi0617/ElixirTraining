@@ -6,6 +6,10 @@ defmodule Sequence.Application do
   use Application
 
   def start(_type, _args) do
+    {:ok, _pid} = OtpServer.Supervisor.start_link(["cat", 120, 30])
+  end
+  # 自動生成されたstart関数
+  def _start(_type, _args) do
     # List all child processes to be supervised
     children = [
       # Starts a worker by calling: Sequence.Worker.start_link(arg)

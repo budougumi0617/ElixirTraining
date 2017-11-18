@@ -1,5 +1,5 @@
 defmodule OtpServer.SubSupervisor do
-  user GenServer
+  use GenServer
 
   ###
   ## 外部API
@@ -17,5 +17,17 @@ defmodule OtpServer.SubSupervisor do
   ###
   # GenServerの実装
 
-  # W.I.P.
+  def init(stash_pid) do
+    current_stack = OtpServer.Stash.get_value stash_pid
+    { :ok, {pop, current_stack} }
+  end
+  def handle_call(:push, _from, {[head | tail], stash_pid }) do
+    { :reply, head, {tail, stash_pid} }
+  end
+  def handle_cast({:push, e}, {current_stack, stash_pid}) do
+    { :noreply, {[e | current_stack], stash_pid }}
+  end
+  def terminate(_reason, {current_stack, stash_pid }) do
+    OtpServer.Stash.save_value stash_pid, current_stack
+  end
 end
