@@ -1,4 +1,4 @@
-defmodule Sequence.Application do
+defmodule OtpServer.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false

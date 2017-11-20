@@ -13,7 +13,7 @@ defmodule OtpServer.Stash do
   end
 
   def get_value(pid) do
-    GenServer.get_value pid, :get_value
+    GenServer.call pid, :get_value
   end
 
   ###
@@ -23,7 +23,7 @@ defmodule OtpServer.Stash do
     { :reply, current_stack, current_stack}
   end
 
-  def handle_cast({:save_value, value}, _current_stack) do
+  def handle_cast({:save_value, value}, _current_value) do
     { :noreply, value }
   end
 end
