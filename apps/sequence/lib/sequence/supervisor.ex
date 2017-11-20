@@ -5,7 +5,7 @@ defmodule OtpServer.Supervisor do
     start_workers(sup, initial_queue)
     result
   end
-  def start_workers(sup, [initial_queue]) do
+  def start_workers(sup, initial_queue) do
     # スタッシュワーカーを開始
     {:ok, stash} =
       Supervisor.start_child(sup, worker(OtpServer.Stash, [initial_queue]))
