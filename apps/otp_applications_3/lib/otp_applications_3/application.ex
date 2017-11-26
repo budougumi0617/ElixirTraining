@@ -1,4 +1,4 @@
-defmodule OtpApplications3 do
+defmodule OtpApplications3.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
