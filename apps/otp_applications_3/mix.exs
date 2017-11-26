@@ -19,7 +19,7 @@ defmodule OtpApplications3.Mixfile do
   def application do
     [
       extra_applications: [:logger],
-      mod: {OtpApplications3.Application, []}
+      mod: {OtpApplications3.Application, 456}
     ]
   end
 
