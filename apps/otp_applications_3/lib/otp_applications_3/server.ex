@@ -33,7 +33,7 @@ defmodule OtpApplications3.Server do
     { :noreply, {current_number + delta, stash_pid} }
   end
   def terminate(reason, {current_number, stash_pid}) do
-    OtpServer.Stash.save_value stash_pid, current_number
+    OtpApplications3.Stash.save_value stash_pid, current_number
     IO.puts "reason : #{inspect reason}"
   end
 end
