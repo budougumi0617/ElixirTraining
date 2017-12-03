@@ -28,9 +28,9 @@ defmodule OtpApplications3.Server do
   # GenServerの実装
 
   def init(stash_pid) do
-    current_number = OtpApplications3.Stash.get_value stash_pid
+    current_number, delta = OtpApplications3.Stash.get_value stash_pid
     { :ok,
-      %State{current_number: current_number, stash_pid: stash_pid} }
+      %State{current_number: current_number, stash_pid: stash_pid, delta: delta} }
   end
   def handle_call(:next_number, _from, state) do
     { :reply, state.current_number, %{ state  | current_number: state.current_number + state.delta }}
@@ -40,7 +40,7 @@ defmodule OtpApplications3.Server do
      %{state | current_number: state.current_number + delta, delta: delta}}
   end
   def terminate(reason, state) do
-    OtpApplications3.Stash.save_value state.stash_pid, state.current_number
+    OtpApplications3.Stash.save_value state.stash_pid, {state.current_number, state.delta}
     IO.puts "reason : #{inspect reason}"
   end
 
