@@ -21,7 +21,7 @@ defmodule OtpApplications3.Server do
     GenServer.cast __MODULE__, {:increment_number, delta}
   end
   def arbitary_abort do
-    exit(2)
+    raise "Server aborted!!"
   end
 
   ###

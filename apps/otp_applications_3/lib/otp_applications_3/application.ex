@@ -6,7 +6,9 @@ defmodule OtpApplications3.Application do
   use Application
 
   def start(_type, _args) do
+    number = Application.get_env(:otp_applications_3, :initial_number)
+    delta  = Application.get_env(:otp_applications_3, :initial_delta)
     OtpApplications3.Supervisor
-      .start_link(Application.get_env(:otp_applications_3, :initial_number))
+      .start_link([current_number: number, delta: delta])
   end
 end

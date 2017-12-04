@@ -20,7 +20,7 @@ defmodule OtpApplications3.Mixfile do
     [
       extra_applications: [:logger],
       mod:                {OtpApplications3.Application, []},
-      env:                [initial_number: 456],
+      env:                [initial_number: 456, initial_delta: 1],
       registered:         [OtpApplications3.Server]
     ]
   end
