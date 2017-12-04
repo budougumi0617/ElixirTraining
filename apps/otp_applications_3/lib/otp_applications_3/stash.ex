@@ -1,5 +1,6 @@
 defmodule OtpApplications3.Stash do
   use GenServer
+  require Logger
 
   @vsn "1"
   ###

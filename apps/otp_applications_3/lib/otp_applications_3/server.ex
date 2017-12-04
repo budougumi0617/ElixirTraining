@@ -28,19 +28,20 @@ defmodule OtpApplications3.Server do
   # GenServerの実装
 
   def init(stash_pid) do
-    current_number, delta = OtpApplications3.Stash.get_value stash_pid
+    values = OtpApplications3.Stash.get_value stash_pid
     { :ok,
-      %State{current_number: current_number, stash_pid: stash_pid, delta: delta} }
+      %State{current_number: values[:current_number], stash_pid: stash_pid, delta: values[:delta]} }
   end
   def handle_call(:next_number, _from, state) do
     { :reply, state.current_number, %{ state  | current_number: state.current_number + state.delta }}
   end
   def handle_cast({:increment_number, delta}, state) do
     { :noreply,
+      # Update elements in Map. https://hexdocs.pm/elixir/Map.html
      %{state | current_number: state.current_number + delta, delta: delta}}
   end
   def terminate(reason, state) do
-    OtpApplications3.Stash.save_value state.stash_pid, {state.current_number, state.delta}
+    OtpApplications3.Stash.save_value state.stash_pid, [current_number: state.current_number, delta: state.delta]
     IO.puts "reason : #{inspect reason}"
   end
 
