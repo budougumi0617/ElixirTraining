@@ -19,3 +19,9 @@ defmodule UnlessTest do
     IO.puts "TRUE"
   end
 end
+
+# iex apps/elixir_traing/lib/ch17/macro_and_code_evalution01.ex
+# Erlang/OTP 20 [erts-9.1.2] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+# 
+# TRUE
+# Interactive Elixir (1.5.2) - press Ctrl+C to exit (type h() ENTER for help)
