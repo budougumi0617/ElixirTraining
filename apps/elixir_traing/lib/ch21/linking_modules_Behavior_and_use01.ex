@@ -1,4 +1,4 @@
-defmodule Tracer do
+defmodule LMBAU01Tracer do
   def dump_args(args) do
     args |> Enum.map(&inspect/1) |> Enum.join(", ")
   end
@@ -10,9 +10,9 @@ defmodule Tracer do
   defmacro def(definition={name, _, args}, do: content) do
     quote do
       Kernel.def(unquote(definition)) do
-        IO.puts "==> call:   #{Tracer.dump_defn(unquote(name), unquote(args))}"
+        IO.puts "==> call:   #{LMBAU01Tracer.dump_defn(unquote(name), unquote(args))}"
         result = unquote(content)
-        IO.puts "<== result: #{result}"
+        IO.puts "<== result: #{result}" # quote内で宣言されているから、unquoteする必要がない？
       end
     end
   end
@@ -26,15 +26,15 @@ defmodule Tracer do
 end
 
 
-defmodule Test do
-  use Tracer
+defmodule LMBAU01Test do
+  use LMBAU01Tracer
 
   def puts_sum_three(a, b, c), do: IO.inspect(a+b+c)
   def add_list(list),          do: Enum.reduce(list, 0, &(&1+&2))
 end
 
-Test.puts_sum_three(1,2,3)
-Test.add_list([5,6,7,8])
+LMBAU01Test.puts_sum_three(1,2,3)
+LMBAU01Test.add_list([5,6,7,8])
 
 # Result
 #
