@@ -1,0 +1,10 @@
+test
+budougumi
+apple
+command
+option
+shift
+tab
+delete
+return
+

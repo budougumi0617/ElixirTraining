@@ -21,7 +21,7 @@ end
 IO.puts Protocols01.encrypt("test abcz", 1)
 
 # Result
-# iex lib/ch21/protocols01.ex
+# iex lib/ch22/protocols01.ex
 # Erlang/OTP 20 [erts-9.1.2] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 #
 # uftu!bcda
