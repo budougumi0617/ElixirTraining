@@ -19,7 +19,7 @@ defimpl Protocols02, for: [BitString, List] do
 end
 
 defmodule SearchRot do
-  @file_name "2of12.txt"
+  @file_name Path.join(Path.dirname(__ENV__.file), "2of12.txt")
   # @file_name "words.txt"
 
   def searh_rot13() do
