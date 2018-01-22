@@ -11,11 +11,9 @@ defmodule MoreCoolStuff02 do
     end
 
     def replace(x) do
-        f = Float.parse x
-        if f == :error do
-            x
-        else
-            elem(f, 0)
+        case Float.parse x do
+            {f, _} -> f
+            _ -> x # :error
         end
     end
 
